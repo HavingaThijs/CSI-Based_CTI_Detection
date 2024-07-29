@@ -1,0 +1,13 @@
+menu "CSI-Based CTI Detection"
+config CSI_CTI_DETECT_ENABLE_MODEL
+    bool "Enable model"
+    default true
+    help
+      Enable running CNN model on the device.
+
+config CSI_CTI_DETECT_WIFI_SSID
+    string "Wi-Fi SSID"
+    default "openwifi_ax"
+    help
+      SSID of the AP to connect to.
+endmenu

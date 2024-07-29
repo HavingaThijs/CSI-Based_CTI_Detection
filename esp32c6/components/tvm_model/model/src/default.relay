@@ -1,0 +1,21 @@
+def @main(%input: Tensor[(1, 2, 242), float32] /* ty=Tensor[(1, 2, 242), float32] span=/Reshape.input:0:0 */) -> Tensor[(1, 14), float32] {
+  %0 = reshape(%input, newshape=[1, 1, 242, 2]) /* ty=Tensor[(1, 1, 242, 2), float32] span=/Reshape:0:0 */;
+  %1 = nn.conv2d(%0, meta[relay.Constant][0] /* ty=Tensor[(16, 1, 2, 1), float32] span=/conv1/Conv.conv1.weight:0:0 */, strides=[2, 2], padding=[0, 0, 0, 0], channels=16, kernel_size=[2, 1]) /* ty=Tensor[(1, 16, 121, 1), float32] span=/conv1/Conv:0:0 */;
+  %2 = nn.bias_add(%1, meta[relay.Constant][1] /* ty=Tensor[(16), float32] span=/conv1/Conv.conv1.bias:0:0 */) /* ty=Tensor[(1, 16, 121, 1), float32] span=/conv1/Conv:0:0 */;
+  %3 = nn.relu(%2) /* ty=Tensor[(1, 16, 121, 1), float32] span=/Relu:0:0 */;
+  %4 = nn.conv2d(%3, meta[relay.Constant][2] /* ty=Tensor[(32, 16, 2, 1), float32] span=/conv2/Conv.conv2.weight:0:0 */, strides=[2, 2], padding=[0, 0, 0, 0], channels=32, kernel_size=[2, 1]) /* ty=Tensor[(1, 32, 60, 1), float32] span=/conv2/Conv:0:0 */;
+  %5 = nn.bias_add(%4, meta[relay.Constant][3] /* ty=Tensor[(32), float32] span=/conv2/Conv.conv2.bias:0:0 */) /* ty=Tensor[(1, 32, 60, 1), float32] span=/conv2/Conv:0:0 */;
+  %6 = nn.relu(%5) /* ty=Tensor[(1, 32, 60, 1), float32] span=/Relu_1:0:0 */;
+  %7 = reshape(%6, newshape=[1, -1]) /* ty=Tensor[(1, 1920), float32] span=/Reshape_1:0:0 */;
+  %8 = nn.dense(%7, meta[relay.Constant][4] /* ty=Tensor[(500, 1920), float32] span=/fc1/Gemm.fc1.weight:0:0 */, units=500) /* ty=Tensor[(1, 500), float32] span=/fc1/Gemm:0:0 */;
+  %9 = add(%8, meta[relay.Constant][5] /* ty=Tensor[(500), float32] span=/fc1/Gemm.fc1.bias:0:0 */) /* ty=Tensor[(1, 500), float32] span=/fc1/Gemm:0:0 */;
+  %10 = nn.relu(%9) /* ty=Tensor[(1, 500), float32] span=/Relu_2:0:0 */;
+  %11 = nn.dense(%10, meta[relay.Constant][6] /* ty=Tensor[(50, 500), float32] span=/fc2/Gemm.fc2.weight:0:0 */, units=50) /* ty=Tensor[(1, 50), float32] span=/fc2/Gemm:0:0 */;
+  %12 = add(%11, meta[relay.Constant][7] /* ty=Tensor[(50), float32] span=/fc2/Gemm.fc2.bias:0:0 */) /* ty=Tensor[(1, 50), float32] span=/fc2/Gemm:0:0 */;
+  %13 = nn.relu(%12) /* ty=Tensor[(1, 50), float32] span=/Relu_3:0:0 */;
+  %14 = nn.dense(%13, meta[relay.Constant][8] /* ty=Tensor[(14, 50), float32] span=/fc3/Gemm.fc3.weight:0:0 */, units=14) /* ty=Tensor[(1, 14), float32] span=/fc3/Gemm:0:0 */;
+  %15 = add(%14, meta[relay.Constant][9] /* ty=Tensor[(14), float32] span=/fc3/Gemm.fc3.bias:0:0 */) /* ty=Tensor[(1, 14), float32] span=/fc3/Gemm:0:0 */;
+  %16 = nn.softmax(%15, axis=1) /* ty=Tensor[(1, 14), float32] span=/LogSoftmax:0:0 */;
+  log(%16) /* ty=Tensor[(1, 14), float32] span=/LogSoftmax:0:0 */
+}
+
