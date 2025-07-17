@@ -2,7 +2,6 @@ import torch
 from torch import Tensor
 import onnx
 import model
-import model_multi
 from onnx import checker
 import os
 PATH_TO_ESP_DL = input("Enter the path to the esp-dl repository: ")
@@ -15,7 +14,7 @@ script_dir = os.path.dirname(__file__)
 relative_path = "CSImodel_snr14_24_sir1_15.pth"
 file_path = os.path.join(script_dir, relative_path)
 
-CSImodel = model_multi.CNN()
+CSImodel = model.CNN()
 CSImodel.load_state_dict(torch.load(file_path))
 onnx_file_path = os.path.join(script_dir, 'CSImodel.onnx')
 t = Tensor(1, 2, 242)
