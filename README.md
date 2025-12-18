@@ -10,5 +10,5 @@ The trained model is available as a serialized PyTorch state dictionary (`model/
 
 Follow [this guide](https://docs.espressif.com/projects/esp-idf/en/stable/esp32/get-started/linux-macos-setup.html) to build the ESP-IDF project and flash it to an ESP32-C6 device.
 
-For access to the prepared data, please contact me at Thijs&#46;Havinga&#64;UGent&#46;be.
+For access to the prepared data, please contact me via GitHub.
 If you want to retrain and deploy the model yourself, execute `model/train.py` (which may take several hours). Then follow [this guide](https://docs.espressif.com/projects/esp-dl/en/latest/esp32/tutorials/deploying-models-through-tvm.html) to download the ESP-DL library first, and then use `model/onnx_convert.py` to generate the ESP-IDF project.
